@@ -47,10 +47,9 @@ class Hack:
 			)
 
 	def fix_marks(self):
-		bad_marks = self.student.mark_set.filter(points__in=[2, 3])
-		for bad_mark in bad_marks:
-			bad_mark.points = 5
-			bad_mark.save()
+		self.student.mark_set.filter(points__in=[2, 3]).update(
+			points=5
+		)
 
 	def remove_chastisements(self):
 		self.student.chastisement_set.all().delete()
