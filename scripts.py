@@ -28,6 +28,10 @@ class Hack:
 			self.student = Schoolkid.objects.get(full_name__contains=self.fio)
 		except Schoolkid.DoesNotExist:
 			raise HackError('По указанному имени не найдено учеников')
+		except Schoolkid.MultipleObjectsReturned:
+			raise HackError(
+				'По указанному имени найдено более одного ученика'
+			)
 
 	def set_subject(self):
 		try:
@@ -37,6 +41,10 @@ class Hack:
 			)
 		except Subject.DoesNotExist:
 			raise HackError('Не найдено предмета у указанного ученика')
+		except Subject.MultipleObjectsReturned:
+			raise HackError(
+				'По указанному названию найдено более одного предмета'
+			)
 
 	def fix_marks(self):
 		bad_marks = self.student.mark_set.filter(points__in=[2, 3])
