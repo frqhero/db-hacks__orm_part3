@@ -1,5 +1,5 @@
 from datacenter.models import (
-	models, Schoolkid, Lesson, Commendation, Subject
+	Schoolkid, Lesson, Commendation, Subject
 )
 
 
@@ -26,7 +26,7 @@ class Hack:
 			raise HackError('Пустое имя')
 		try:
 			self.student = Schoolkid.objects.get(full_name__contains=self.fio)
-		except models.ObjectDoesNotExist:
+		except Schoolkid.DoesNotExist:
 			raise HackError('По указанному имени не найдено учеников')
 
 	def set_subject(self):
@@ -35,7 +35,7 @@ class Hack:
 				title=self.subject_name,
 				year_of_study=self.student.year_of_study
 			)
-		except models.ObjectDoesNotExist:
+		except Subject.DoesNotExist:
 			raise HackError('Не найдено предмета у указанного ученика')
 
 	def fix_marks(self):
